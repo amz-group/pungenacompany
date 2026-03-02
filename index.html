@@ -4,38 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BuilderPro Construction</title>
-<style>
 
+<style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial, sans-serif;
+scroll-behavior:smooth;
 }
 
 body{
 background:#f4f4f4;
-color:#333;
 }
 
-/* Navbar */
+/* ===== NAVBAR ===== */
 nav{
 background:#111;
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:15px 50px;
+padding:15px 40px;
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
 }
 
-nav h1{
+.logo{
 color:#f4b400;
+font-size:22px;
+font-weight:bold;
 }
 
 nav ul{
 list-style:none;
 display:flex;
-gap:20px;
+gap:25px;
 }
 
 nav ul li a{
@@ -48,37 +54,43 @@ nav ul li a:hover{
 color:#f4b400;
 }
 
-/* Hero Section */
+/* Hamburger */
+.menu-toggle{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+/* ===== HERO ===== */
 .hero{
-height:90vh;
+height:100vh;
 background:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') no-repeat center/cover;
 display:flex;
 justify-content:center;
 align-items:center;
 text-align:center;
 color:white;
+padding-top:60px;
 }
 
 .hero h2{
-font-size:50px;
+font-size:45px;
 background:rgba(0,0,0,0.6);
 padding:20px;
+border-radius:10px;
 }
 
-/* Services */
-.services{
-padding:60px 50px;
+/* Sections */
+section{
+padding:100px 40px;
 text-align:center;
-}
-
-.services h2{
-margin-bottom:40px;
 }
 
 .cards{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
+gap:25px;
+margin-top:40px;
 }
 
 .card{
@@ -93,33 +105,45 @@ transition:0.3s;
 transform:translateY(-10px);
 }
 
-/* About */
 .about{
 background:#222;
 color:white;
-padding:60px 50px;
-text-align:center;
-}
-
-/* Contact */
-.contact{
-padding:60px 50px;
-text-align:center;
-}
-
-.contact button{
-padding:10px 25px;
-background:#f4b400;
-border:none;
-cursor:pointer;
-font-weight:bold;
 }
 
 footer{
 background:#111;
 color:white;
-text-align:center;
 padding:20px;
+text-align:center;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:60px;
+left:0;
+background:#111;
+width:100%;
+flex-direction:column;
+align-items:center;
+display:none;
+padding:20px 0;
+}
+
+nav ul.active{
+display:flex;
+}
+
+.menu-toggle{
+display:block;
+}
+
+.hero h2{
+font-size:28px;
+}
+
 }
 
 </style>
@@ -127,20 +151,23 @@ padding:20px;
 <body>
 
 <nav>
-<h1>BuilderPro</h1>
-<ul>
-<li><a href="#">Home</a></li>
-<li><a href="#">Services</a></li>
-<li><a href="#">About</a></li>
-<li><a href="#">Contact</a></li>
+<div class="logo">BuilderPro</div>
+
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+<ul id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
 </ul>
 </nav>
 
-<section class="hero">
+<section id="home" class="hero">
 <h2>We Build Your Dream Projects</h2>
 </section>
 
-<section class="services">
+<section id="services">
 <h2>Our Services</h2>
 <div class="cards">
 <div class="card">
@@ -149,29 +176,34 @@ padding:20px;
 </div>
 <div class="card">
 <h3>Commercial Projects</h3>
-<p>Offices, malls and business centers.</p>
+<p>Offices and business centers.</p>
 </div>
 <div class="card">
 <h3>Renovation</h3>
-<p>Upgrade and rebuild old structures.</p>
+<p>Upgrade old structures professionally.</p>
 </div>
 </div>
 </section>
 
-<section class="about">
+<section id="about" class="about">
 <h2>About Our Company</h2>
-<p>BuilderPro is a professional construction company with years of experience in modern building and architecture.</p>
+<p>We are a professional construction company with years of experience in modern building.</p>
 </section>
 
-<section class="contact">
+<section id="contact">
 <h2>Contact Us</h2>
 <p>Email: info@builderpro.com</p>
-<button>Call Now</button>
 </section>
 
 <footer>
-<p>© 2026 BuilderPro Construction Company</p>
+© 2026 BuilderPro Construction
 </footer>
+
+<script>
+function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>
