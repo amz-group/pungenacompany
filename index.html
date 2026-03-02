@@ -6,19 +6,19 @@
 <title>BuilderPro Construction</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial, sans-serif;
-scroll-behavior:smooth;
 }
 
 body{
 background:#f4f4f4;
 }
 
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 nav{
 background:#111;
 color:white;
@@ -26,10 +26,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px 40px;
-position:fixed;
-width:100%;
-top:0;
-z-index:1000;
 }
 
 .logo{
@@ -44,48 +40,43 @@ display:flex;
 gap:25px;
 }
 
-nav ul li a{
-color:white;
-text-decoration:none;
-transition:0.3s;
-}
-
-nav ul li a:hover{
-color:#f4b400;
-}
-
-/* Hamburger */
-.menu-toggle{
-display:none;
-font-size:28px;
+nav ul li{
 cursor:pointer;
 }
 
-/* ===== HERO ===== */
+nav ul li:hover{
+color:#f4b400;
+}
+
+/* SECTIONS */
+.page{
+display:none;
+padding:80px 40px;
+text-align:center;
+min-height:80vh;
+}
+
+.active{
+display:block;
+}
+
+/* HERO */
 .hero{
-height:100vh;
+height:70vh;
 background:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') no-repeat center/cover;
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
 color:white;
-padding-top:60px;
 }
 
 .hero h2{
-font-size:45px;
 background:rgba(0,0,0,0.6);
 padding:20px;
 border-radius:10px;
 }
 
-/* Sections */
-section{
-padding:100px 40px;
-text-align:center;
-}
-
+/* CARDS */
 .cards{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -98,16 +89,6 @@ background:white;
 padding:30px;
 border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-}
-
-.about{
-background:#222;
-color:white;
 }
 
 footer{
@@ -117,33 +98,19 @@ padding:20px;
 text-align:center;
 }
 
-/* ===== MOBILE ===== */
+/* MOBILE */
 @media(max-width:768px){
-
-nav ul{
-position:absolute;
-top:60px;
-left:0;
-background:#111;
-width:100%;
+nav{
 flex-direction:column;
-align-items:center;
-display:none;
-padding:20px 0;
+gap:15px;
 }
-
-nav ul.active{
-display:flex;
+nav ul{
+flex-direction:column;
+gap:10px;
 }
-
-.menu-toggle{
-display:block;
+.hero{
+height:50vh;
 }
-
-.hero h2{
-font-size:28px;
-}
-
 }
 
 </style>
@@ -152,27 +119,28 @@ font-size:28px;
 
 <nav>
 <div class="logo">BuilderPro</div>
-
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-<ul id="navLinks">
-<li><a href="#home">Home</a></li>
-<li><a href="#services">Services</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#contact">Contact</a></li>
+<ul>
+<li onclick="showPage('home')">Home</li>
+<li onclick="showPage('services')">Services</li>
+<li onclick="showPage('about')">About</li>
+<li onclick="showPage('contact')">Contact</li>
 </ul>
 </nav>
 
-<section id="home" class="hero">
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="hero">
 <h2>We Build Your Dream Projects</h2>
-</section>
+</div>
+</div>
 
-<section id="services">
+<!-- SERVICES -->
+<div id="services" class="page">
 <h2>Our Services</h2>
 <div class="cards">
 <div class="card">
 <h3>Residential Buildings</h3>
-<p>Modern and high-quality houses.</p>
+<p>Modern high-quality houses.</p>
 </div>
 <div class="card">
 <h3>Commercial Projects</h3>
@@ -180,28 +148,33 @@ font-size:28px;
 </div>
 <div class="card">
 <h3>Renovation</h3>
-<p>Upgrade old structures professionally.</p>
+<p>Upgrade and rebuild structures.</p>
 </div>
 </div>
-</section>
+</div>
 
-<section id="about" class="about">
+<!-- ABOUT -->
+<div id="about" class="page">
 <h2>About Our Company</h2>
-<p>We are a professional construction company with years of experience in modern building.</p>
-</section>
+<p>We are a professional construction company with years of experience in modern architecture and building design.</p>
+</div>
 
-<section id="contact">
+<!-- CONTACT -->
+<div id="contact" class="page">
 <h2>Contact Us</h2>
 <p>Email: info@builderpro.com</p>
-</section>
+<p>Phone: +964 750 000 0000</p>
+</div>
 
 <footer>
 © 2026 BuilderPro Construction
 </footer>
 
 <script>
-function toggleMenu(){
-document.getElementById("navLinks").classList.toggle("active");
+function showPage(pageId){
+let pages = document.querySelectorAll('.page');
+pages.forEach(page => page.classList.remove('active'));
+document.getElementById(pageId).classList.add('active');
 }
 </script>
 
