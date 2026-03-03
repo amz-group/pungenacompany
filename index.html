@@ -1,181 +1,620 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BuilderPro Construction</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --gold: #c8963e;
+    --dark: #0d0d0d;
+    --dark2: #141414;
+    --mid: #1e1e1e;
+    --light: #f0ece4;
+    --muted: #888;
+  }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
+- {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
-body{
-background:#f4f4f4;
-}
-
-/* NAVBAR */
-nav{
-background:#111;
-color:white;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 40px;
+html {
+scroll-behavior: smooth;
 }
 
-.logo{
-color:#f4b400;
-font-size:22px;
-font-weight:bold;
+body {
+background: var(–dark);
+color: var(–light);
+font-family: ‘DM Sans’, sans-serif;
+overflow-x: hidden;
 }
 
-nav ul{
-list-style:none;
-display:flex;
-gap:25px;
+/* ── NAVBAR ── */
+nav {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 100;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 18px 60px;
+background: rgba(13,13,13,0.85);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(200,150,62,0.15);
 }
 
-nav ul li{
-cursor:pointer;
+.logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+letter-spacing: 3px;
+color: var(–gold);
 }
 
-nav ul li:hover{
-color:#f4b400;
+.logo span {
+color: var(–light);
 }
 
-/* SECTIONS */
-.page{
-display:none;
-padding:80px 40px;
-text-align:center;
-min-height:80vh;
+nav ul {
+list-style: none;
+display: flex;
+gap: 36px;
 }
 
-.active{
-display:block;
+nav ul li {
+font-size: 13px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+cursor: pointer;
+transition: color 0.3s;
+position: relative;
 }
 
-/* HERO */
-.hero{
-height:70vh;
-background:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') no-repeat center/cover;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
+nav ul li::after {
+content: ‘’;
+position: absolute;
+bottom: -4px;
+left: 0;
+width: 0;
+height: 1px;
+background: var(–gold);
+transition: width 0.3s;
 }
 
-.hero h2{
-background:rgba(0,0,0,0.6);
-padding:20px;
-border-radius:10px;
+nav ul li:hover,
+nav ul li.active-link {
+color: var(–light);
 }
 
-/* CARDS */
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-margin-top:40px;
+nav ul li:hover::after,
+nav ul li.active-link::after {
+width: 100%;
 }
 
-.card{
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+/* ── PAGES ── */
+.page {
+display: none;
+min-height: 100vh;
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-footer{
-background:#111;
-color:white;
-padding:20px;
-text-align:center;
+.page.active {
+display: block;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-nav{
-flex-direction:column;
-gap:15px;
-}
-nav ul{
-flex-direction:column;
-gap:10px;
-}
-.hero{
-height:50vh;
-}
+.page.visible {
+opacity: 1;
+transform: translateY(0);
 }
 
+/* ── HOME ── */
+#home {
+position: relative;
+height: 100vh;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute;
+inset: 0;
+background: url(‘https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600’) no-repeat center/cover;
+filter: brightness(0.3);
+transform: scale(1.05);
+animation: zoomOut 8s ease forwards;
+}
+
+@keyframes zoomOut {
+to { transform: scale(1); }
+}
+
+.hero-content {
+position: relative;
+z-index: 2;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 0 60px;
+max-width: 750px;
+}
+
+.hero-tag {
+font-size: 11px;
+letter-spacing: 4px;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 20px;
+opacity: 0;
+animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(64px, 9vw, 110px);
+line-height: 0.95;
+letter-spacing: 1px;
+color: var(–light);
+opacity: 0;
+animation: fadeUp 0.8s 0.7s forwards;
+}
+
+.hero-title em {
+color: var(–gold);
+font-style: normal;
+}
+
+.hero-sub {
+margin-top: 28px;
+font-size: 15px;
+font-weight: 300;
+color: rgba(240,236,228,0.6);
+line-height: 1.7;
+max-width: 400px;
+opacity: 0;
+animation: fadeUp 0.8s 1s forwards;
+}
+
+.hero-btn {
+margin-top: 40px;
+display: inline-block;
+padding: 14px 36px;
+border: 1px solid var(–gold);
+color: var(–gold);
+font-size: 12px;
+letter-spacing: 3px;
+text-transform: uppercase;
+cursor: pointer;
+background: transparent;
+transition: background 0.3s, color 0.3s;
+opacity: 0;
+animation: fadeUp 0.8s 1.3s forwards;
+}
+
+.hero-btn:hover {
+background: var(–gold);
+color: var(–dark);
+}
+
+.hero-line {
+position: absolute;
+right: 60px;
+bottom: 60px;
+display: flex;
+align-items: center;
+gap: 14px;
+font-size: 11px;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–muted);
+}
+
+.hero-line::before {
+content: ‘’;
+width: 60px;
+height: 1px;
+background: var(–gold);
+}
+
+@keyframes fadeUp {
+to { opacity: 1; transform: translateY(0); }
+from { opacity: 0; transform: translateY(30px); }
+}
+
+/* ── SERVICES ── */
+#services {
+padding: 130px 60px 80px;
+background: var(–dark);
+}
+
+.section-header {
+margin-bottom: 70px;
+}
+
+.section-tag {
+font-size: 11px;
+letter-spacing: 4px;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 14px;
+}
+
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(42px, 6vw, 72px);
+line-height: 1;
+letter-spacing: 1px;
+}
+
+.cards {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 2px;
+}
+
+.card {
+background: var(–mid);
+padding: 50px 40px;
+position: relative;
+overflow: hidden;
+transition: background 0.4s;
+cursor: default;
+}
+
+.card::before {
+content: ‘’;
+position: absolute;
+top: 0;
+left: 0;
+width: 3px;
+height: 0;
+background: var(–gold);
+transition: height 0.4s;
+}
+
+.card:hover {
+background: #1a1a1a;
+}
+
+.card:hover::before {
+height: 100%;
+}
+
+.card-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 56px;
+color: rgba(200,150,62,0.12);
+line-height: 1;
+margin-bottom: 24px;
+transition: color 0.4s;
+}
+
+.card:hover .card-num {
+color: rgba(200,150,62,0.25);
+}
+
+.card h3 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 26px;
+letter-spacing: 1px;
+margin-bottom: 14px;
+color: var(–light);
+}
+
+.card p {
+font-size: 14px;
+color: var(–muted);
+line-height: 1.7;
+}
+
+/* ── ABOUT ── */
+#about {
+padding: 130px 60px 80px;
+background: var(–dark2);
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 80px;
+align-items: center;
+}
+
+#about .section-header {
+margin-bottom: 30px;
+}
+
+.about-text {
+font-size: 15px;
+color: rgba(240,236,228,0.6);
+line-height: 1.9;
+margin-bottom: 20px;
+}
+
+.about-stats {
+display: flex;
+gap: 40px;
+margin-top: 40px;
+}
+
+.stat-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 52px;
+color: var(–gold);
+line-height: 1;
+}
+
+.stat-label {
+font-size: 12px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-top: 6px;
+}
+
+.about-img {
+width: 100%;
+aspect-ratio: 3/4;
+object-fit: cover;
+filter: grayscale(30%) brightness(0.7);
+}
+
+/* ── CONTACT ── */
+#contact {
+padding: 130px 60px 80px;
+background: var(–dark);
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 80px;
+align-items: start;
+}
+
+#contact .section-header {
+margin-bottom: 40px;
+}
+
+.contact-item {
+border-top: 1px solid rgba(255,255,255,0.07);
+padding: 28px 0;
+}
+
+.contact-item:last-child {
+border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.contact-label {
+font-size: 11px;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 8px;
+}
+
+.contact-value {
+font-size: 18px;
+color: var(–light);
+}
+
+.contact-map {
+width: 100%;
+aspect-ratio: 1;
+background: var(–mid);
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(–muted);
+font-size: 13px;
+letter-spacing: 2px;
+text-transform: uppercase;
+position: relative;
+overflow: hidden;
+}
+
+.contact-map::before {
+content: ‘’;
+position: absolute;
+inset: 20px;
+border: 1px solid rgba(200,150,62,0.2);
+}
+
+/* ── FOOTER ── */
+footer {
+background: var(–dark2);
+border-top: 1px solid rgba(200,150,62,0.15);
+padding: 28px 60px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 12px;
+letter-spacing: 1px;
+color: var(–muted);
+}
+
+footer .logo {
+font-size: 20px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+nav {
+padding: 16px 24px;
+}
+nav ul {
+gap: 20px;
+}
+nav ul li {
+font-size: 11px;
+}
+.hero-content {
+padding: 0 24px;
+}
+#services,
+#contact {
+padding: 110px 24px 60px;
+}
+#about {
+padding: 110px 24px 60px;
+grid-template-columns: 1fr;
+}
+#contact {
+grid-template-columns: 1fr;
+}
+.about-img {
+aspect-ratio: 16/9;
+order: -1;
+}
+footer {
+flex-direction: column;
+gap: 10px;
+padding: 20px 24px;
+}
+}
 </style>
+
 </head>
 <body>
 
 <nav>
-<div class="logo">BuilderPro</div>
-<ul>
-<li onclick="showPage('home')">Home</li>
-<li onclick="showPage('services')">Services</li>
-<li onclick="showPage('about')">About</li>
-<li onclick="showPage('contact')">Contact</li>
-</ul>
+  <div class="logo">Builder<span>Pro</span></div>
+  <ul>
+    <li onclick="showPage('home')" class="active-link" id="nav-home">Home</li>
+    <li onclick="showPage('services')" id="nav-services">Services</li>
+    <li onclick="showPage('about')" id="nav-about">About</li>
+    <li onclick="showPage('contact')" id="nav-contact">Contact</li>
+  </ul>
 </nav>
 
 <!-- HOME -->
+
 <div id="home" class="page active">
-<div class="hero">
-<h2>We Build Your Dream Projects</h2>
-</div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Est. 2005 · Iraq</p>
+    <h1 class="hero-title">We Build<br><em>Dream</em><br>Projects</h1>
+    <p class="hero-sub">Professional construction, modern architecture, and precision engineering — built to last generations.</p>
+    <button class="hero-btn" onclick="showPage('services')">Explore Services</button>
+  </div>
+  <div class="hero-line">Since 2005</div>
 </div>
 
 <!-- SERVICES -->
+
 <div id="services" class="page">
-<h2>Our Services</h2>
-<div class="cards">
-<div class="card">
-<h3>Residential Buildings</h3>
-<p>Modern high-quality houses.</p>
-</div>
-<div class="card">
-<h3>Commercial Projects</h3>
-<p>Offices and business centers.</p>
-</div>
-<div class="card">
-<h3>Renovation</h3>
-<p>Upgrade and rebuild structures.</p>
-</div>
-</div>
+  <div class="section-header">
+    <p class="section-tag">What We Do</p>
+    <h2 class="section-title">Our Services</h2>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-num">01</div>
+      <h3>Residential Buildings</h3>
+      <p>Modern high-quality houses designed around how you live, built with precision and lasting materials.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <h3>Commercial Projects</h3>
+      <p>Offices, business centers, and commercial spaces that reflect your brand and support your vision.</p>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <h3>Renovation</h3>
+      <p>Upgrade and rebuild existing structures with contemporary design and modern structural standards.</p>
+    </div>
+  </div>
 </div>
 
 <!-- ABOUT -->
+
 <div id="about" class="page">
-<h2>About Our Company</h2>
-<p>We are a professional construction company with years of experience in modern architecture and building design.</p>
+  <div>
+    <div class="section-header">
+      <p class="section-tag">Who We Are</p>
+      <h2 class="section-title">About Our<br>Company</h2>
+    </div>
+    <p class="about-text">We are a professional construction company with decades of experience in modern architecture and building design. Our team of engineers and architects bring every project to life with uncompromising quality.</p>
+    <p class="about-text">From the first blueprint to the final handover, we are committed to delivering structures that stand the test of time.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years Active</div>
+      </div>
+      <div>
+        <div class="stat-num">340</div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+  <img class="about-img" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800" alt="Construction site">
 </div>
 
 <!-- CONTACT -->
+
 <div id="contact" class="page">
-<h2>Contact Us</h2>
-<p>Email: info@builderpro.com</p>
-<p>Phone: +964 750 000 0000</p>
+  <div>
+    <div class="section-header">
+      <p class="section-tag">Reach Out</p>
+      <h2 class="section-title">Contact Us</h2>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Email</div>
+      <div class="contact-value">info@builderpro.com</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">+964 750 000 0000</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Office Hours</div>
+      <div class="contact-value">Sun – Thu, 8am – 5pm</div>
+    </div>
+  </div>
+  <div class="contact-map">Location Map</div>
 </div>
 
 <footer>
-© 2026 BuilderPro Construction
+  <div class="logo">Builder<span>Pro</span></div>
+  <span>© 2026 BuilderPro Construction. All rights reserved.</span>
 </footer>
 
 <script>
-function showPage(pageId){
-let pages = document.querySelectorAll('.page');
-pages.forEach(page => page.classList.remove('active'));
-document.getElementById(pageId).classList.add('active');
-}
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(function(page) {
+      page.classList.remove('active', 'visible');
+    });
+
+    document.querySelectorAll('nav ul li').forEach(function(li) {
+      li.classList.remove('active-link');
+    });
+
+    const target = document.getElementById(pageId);
+    const navItem = document.getElementById('nav-' + pageId);
+
+    target.classList.add('active');
+    if (navItem) navItem.classList.add('active-link');
+
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        target.classList.add('visible');
+      });
+    });
+
+    window.scrollTo(0, 0);
+  }
+
+  // Trigger initial animation
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      document.getElementById('home').classList.add('visible');
+    });
+  });
 </script>
 
 </body>
